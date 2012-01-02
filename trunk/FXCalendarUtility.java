@@ -108,6 +108,14 @@ public class FXCalendarUtility {
 	public String[] getShortestWeekDays(Locale locale){
 		if(SHORTEST_WEEK_DAYS==null || SHORTEST_WEEK_DAYS.length==0){
 			SHORTEST_WEEK_DAYS = getDayNames("xs",locale);
+			// For French Locales Monday is first day of week.
+			if(locale.equals(Locale.FRENCH)){
+				String dum = SHORTEST_WEEK_DAYS[1];
+				for(int i=1;i<7;i++){
+					SHORTEST_WEEK_DAYS[i] = SHORTEST_WEEK_DAYS[i+1];
+				}
+				SHORTEST_WEEK_DAYS[7] = dum;
+			}
 		}
 		return SHORTEST_WEEK_DAYS;
 	}
@@ -116,12 +124,28 @@ public class FXCalendarUtility {
 		if(SHORT_WEEK_DAYS==null || SHORT_WEEK_DAYS.length==0){
 			SHORT_WEEK_DAYS = getDayNames("s",locale);
 		}
+		// For French Locales Monday is first day of week.
+		if(locale.equals(Locale.FRENCH)){
+			String dum = SHORT_WEEK_DAYS[1];
+			for(int i=1;i<7;i++){
+				SHORT_WEEK_DAYS[i] = SHORT_WEEK_DAYS[i+1];
+			}
+			SHORT_WEEK_DAYS[7] = dum;
+		}
 		return SHORT_WEEK_DAYS;
 	}
 	
 	public String[] getWeekDays(Locale locale){
 		if(WEEK_DAYS==null || WEEK_DAYS.length==0){
 			WEEK_DAYS = getDayNames(null,locale);
+		}
+		// For French Locales Monday is first day of week.
+		if(locale.equals(Locale.FRENCH)){
+			String dum = WEEK_DAYS[1];
+			for(int i=1;i<7;i++){
+				WEEK_DAYS[i] = WEEK_DAYS[i+1];
+			}
+			WEEK_DAYS[7] = dum;
 		}
 		return WEEK_DAYS;
 	}
@@ -235,5 +259,6 @@ public class FXCalendarUtility {
 	}
 	
 }
+
 
 
