@@ -3,6 +3,7 @@ package com.sai.javafx.calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -263,8 +264,21 @@ public class BasePane extends Group {
 
 		Calendar firstDayOfMonth = FXCalendarUtility.getDate(1, datePicker.getSelectedMonth(), datePicker.getSelectedYear());
 		Calendar paneFirstDate = (Calendar) firstDayOfMonth.clone();
-		paneFirstDate.add(Calendar.DAY_OF_YEAR, -(firstDayOfMonth.get(Calendar.DAY_OF_WEEK) - 1));
-
+		
+		// For French Locales Monday is first day of week.
+		if(datePicker.getLocale().equals(Locale.FRENCH)){
+			int diff =0;
+			if(firstDayOfMonth.get(Calendar.DAY_OF_WEEK)==1){
+				diff = 6;
+			}else{
+				diff = firstDayOfMonth.get(Calendar.DAY_OF_WEEK) - 2;
+			}
+			paneFirstDate.add(Calendar.DAY_OF_YEAR, -diff );
+		}else{
+			// For remaining all Locales's Sunday is first day of week.
+			paneFirstDate.add(Calendar.DAY_OF_YEAR, -(firstDayOfMonth.get(Calendar.DAY_OF_WEEK) - 1));
+		}
+		
 		Calendar dummyDate = (Calendar) paneFirstDate.clone();
 		Calendar systemDate = FXCalendarUtility.getCurrentDateCalendar();
 
@@ -381,3 +395,4 @@ public class BasePane extends Group {
 		getChildren().add(footerPane);
 	}
 }
+
