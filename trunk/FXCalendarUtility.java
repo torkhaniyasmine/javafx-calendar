@@ -206,7 +206,7 @@ public class FXCalendarUtility {
 		int i = (int)Math.round((double)color.getRed() * 255D);
         int j = (int)Math.round((double)color.getGreen() * 255D);
         int k = (int)Math.round((double)color.getBlue() * 255D);
-    	return "#"+toHex(i)+toHex(j)+toHex(k) ; 
+    	return "#"+toHex(i)+toHex(j)+toHex(k) ;
 	}
 	
 	private static String toHex(int code){
@@ -259,6 +259,7 @@ public class FXCalendarUtility {
 	}
 	
 }
+
 
 
 
