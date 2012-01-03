@@ -265,8 +265,8 @@ public class BasePane extends Group {
 		Calendar firstDayOfMonth = FXCalendarUtility.getDate(1, datePicker.getSelectedMonth(), datePicker.getSelectedYear());
 		Calendar paneFirstDate = (Calendar) firstDayOfMonth.clone();
 		
-		// For French Locales Monday is first day of week.
-		if(datePicker.getLocale().equals(Locale.FRENCH)){
+		// If Monday is first day of week.
+		if(Calendar.getInstance(datePicker.getLocale()).getFirstDayOfWeek()==2){
 			int diff =0;
 			if(firstDayOfMonth.get(Calendar.DAY_OF_WEEK)==1){
 				diff = 6;
@@ -275,7 +275,7 @@ public class BasePane extends Group {
 			}
 			paneFirstDate.add(Calendar.DAY_OF_YEAR, -diff );
 		}else{
-			// For remaining all Locales's Sunday is first day of week.
+			// If Sunday is first day of week.
 			paneFirstDate.add(Calendar.DAY_OF_YEAR, -(firstDayOfMonth.get(Calendar.DAY_OF_WEEK) - 1));
 		}
 		
