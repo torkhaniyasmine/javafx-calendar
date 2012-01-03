@@ -108,8 +108,8 @@ public class FXCalendarUtility {
 	public String[] getShortestWeekDays(Locale locale){
 		if(SHORTEST_WEEK_DAYS==null || SHORTEST_WEEK_DAYS.length==0){
 			SHORTEST_WEEK_DAYS = getDayNames("xs",locale);
-			// For French Locales Monday is first day of week.
-			if(locale.equals(Locale.FRENCH)){
+			// If Monday is first day of week.
+			if(Calendar.getInstance(locale).getFirstDayOfWeek()==2){
 				String dum = SHORTEST_WEEK_DAYS[1];
 				for(int i=1;i<7;i++){
 					SHORTEST_WEEK_DAYS[i] = SHORTEST_WEEK_DAYS[i+1];
@@ -124,8 +124,8 @@ public class FXCalendarUtility {
 		if(SHORT_WEEK_DAYS==null || SHORT_WEEK_DAYS.length==0){
 			SHORT_WEEK_DAYS = getDayNames("s",locale);
 		}
-		// For French Locales Monday is first day of week.
-		if(locale.equals(Locale.FRENCH)){
+		// If Monday is first day of week.
+		if(Calendar.getInstance(locale).getFirstDayOfWeek()==2){
 			String dum = SHORT_WEEK_DAYS[1];
 			for(int i=1;i<7;i++){
 				SHORT_WEEK_DAYS[i] = SHORT_WEEK_DAYS[i+1];
@@ -139,8 +139,8 @@ public class FXCalendarUtility {
 		if(WEEK_DAYS==null || WEEK_DAYS.length==0){
 			WEEK_DAYS = getDayNames(null,locale);
 		}
-		// For French Locales Monday is first day of week.
-		if(locale.equals(Locale.FRENCH)){
+		// If Monday is first day of week.
+		if(Calendar.getInstance(locale).getFirstDayOfWeek()==2){
 			String dum = WEEK_DAYS[1];
 			for(int i=1;i<7;i++){
 				WEEK_DAYS[i] = WEEK_DAYS[i+1];
@@ -206,7 +206,7 @@ public class FXCalendarUtility {
 		int i = (int)Math.round((double)color.getRed() * 255D);
         int j = (int)Math.round((double)color.getGreen() * 255D);
         int k = (int)Math.round((double)color.getBlue() * 255D);
-    	return "#"+toHex(i)+toHex(j)+toHex(k) ;
+    	return "#"+toHex(i)+toHex(j)+toHex(k) ; 
 	}
 	
 	private static String toHex(int code){
@@ -259,7 +259,6 @@ public class FXCalendarUtility {
 	}
 	
 }
-
 
 
 
