@@ -3,7 +3,6 @@ package com.sai.javafx.calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,6 +35,7 @@ public class BasePane extends Group {
 	private ObservableList<WeekCell> weekCellList = FXCollections.observableArrayList();
 	private ObservableList<DateCell> dateCellList = FXCollections.observableArrayList();
 	public static final String WEEKNUMER_LABEL = "Wk.";
+	private BaseNavigatorArrowButton prevMonthBtn;
 
 	public BasePane(DatePicker datePicker) {
 		super();
@@ -101,12 +101,14 @@ public class BasePane extends Group {
 		});
 
 		/* Getting the Previous Month Button. */
-		BaseNavigatorArrowButton prevMonthBtn = new FXCalendarControls().new BaseNavigatorArrowButton(Side.LEFT, datePicker.getBaseColor());
+		prevMonthBtn = new FXCalendarControls().new BaseNavigatorArrowButton(Side.LEFT, datePicker.getBaseColor());
 		prevMonthBtn.setTranslateX(-pos);
 		prevMonthBtn.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event arg0) {
-				datePicker.decrementMonth();
+				if(!(datePicker.getSelectedMonth()==0 && datePicker.getSelectedYear()==1)){
+					datePicker.decrementMonth();
+				}
 			}
 		});
 
@@ -301,6 +303,10 @@ public class BasePane extends Group {
 					dateCell.getTxt().setDisable(false);
 				} else {
 					dateCell.getTxt().setDisable(true);
+					// Not showing the dates below 01/01/01
+					if((datePicker.getSelectedMonth()==0 && datePicker.getSelectedYear()==1) && dateCell.getCellMonth()!=1){
+						dateCell.setCellYear(0);
+					}
 				}
 
 				// Highlighting the current system date.
