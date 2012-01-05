@@ -26,7 +26,8 @@ public class TopPane extends Group {
 	private SimpleIntegerProperty year = new SimpleIntegerProperty();
 	private CalendarToggleButton[] monthButtons = new CalendarToggleButton[12];
 	private CalendarToggleButton[] yearButtons = new CalendarToggleButton[10];
-
+	private YearNavigatorArrowButton prevBtn;
+	
 	public TopPane(DatePicker datePicker) {
 		super();
 		this.datePicker = datePicker;
@@ -182,8 +183,7 @@ public class TopPane extends Group {
 		tilePane.setVgap(8);
 		tilePane.setTranslateX(5);
 
-		generateYearButtons();
-		YearNavigatorArrowButton prevBtn = new FXCalendarControls().new YearNavigatorArrowButton(Side.LEFT, datePicker.getBaseColor());
+		prevBtn = new FXCalendarControls().new YearNavigatorArrowButton(Side.LEFT, datePicker.getBaseColor());
 		YearNavigatorArrowButton nextBtn = new FXCalendarControls().new YearNavigatorArrowButton(Side.RIGHT, datePicker.getBaseColor());
 
 		prevBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -205,6 +205,8 @@ public class TopPane extends Group {
 
 		tilePane.getChildren().add(prevBtn);
 		tilePane.getChildren().add(nextBtn);
+		
+		generateYearButtons();
 		for (CalendarToggleButton btn : yearButtons) {
 			tilePane.getChildren().add(btn);
 		}
@@ -278,7 +280,13 @@ public class TopPane extends Group {
 
 	private int[] getYearArray(int year) {
 		int[] arr = new int[10];
-		int startYear = year - 4;
+		int startYear = year>5 ? year - 4 : 1; // Not showing negative years
+		if(year==1){
+			prevBtn.setDisable(true);
+		}else{
+			prevBtn.setDisable(false);
+		}
+		
 		for (int i = 0; i < 10; i++) {
 			arr[i] = startYear;
 			startYear++;
@@ -361,3 +369,4 @@ public class TopPane extends Group {
 		return year;
 	}
 }
+
