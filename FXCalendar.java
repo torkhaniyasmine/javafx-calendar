@@ -128,7 +128,7 @@ public class FXCalendar extends HBox {
 					final Integer day = selectedDateProperty().get();
 					final Integer month = selectedMonthProperty().get();
 					final Integer year = selectedYearProperty().get();
-					if (day != 0 && month != 0 && year != 0) {
+					if (day != 0 && month >-1 && year != 0) {
 						String d = cu.getFormattedDate(day, month, year);
 						valueProperty().set(cu.convertStringtoDate(d));
 					}
